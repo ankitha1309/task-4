@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Listing with Filter</title>
+  <style>
+    body {
+      background: linear-gradient(to right, rgba(238, 129, 129, 0.568), rgb(235, 156, 91), rgb(245, 245, 93), rgb(97, 250, 97), rgb(90, 90, 253), rgb(141, 66, 194), rgb(238, 130, 238));
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+    }
+    header {
+      background: #59eef3;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .filters {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .filters h3 {
+      margin-top: 0;
+    }
+    .filters label {
+      display: block;
+      margin: 8px 0;
+    }
+    select, input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 15px;
+    }
+    .product-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .price {
+      font-weight: bold;
+      margin: 6px 0;
+      color: #7852a3;
+    }
+    @media(max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Product Listing Page 🛍️</h1>
+  </header>
+
+  <div class="container">
+    <aside class="filters">
+      <h3>Filter</h3>
+      <label>
+        Category:
+        <select id="categoryFilter">
+          <option value="all">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing</option>
+          <option value="books">Books</option>
+          <option value="makeup">MakeUp</option>
+        </select>
+      </label>
+      <label>
+        Price (max):
+        <input type="number" id="priceFilter" placeholder="e.g. 1000">
+      </label>
+    </aside>
+
+    <section class="products" id="productList"></section>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: "Smartphone", category: "electronics", price: 35000, img: "images/smartphone.JPG", link: "https://www.triveniworld.com/" },
+      { id: 2, name: "Laptop", category: "electronics", price: 20000, img: "images/laptop.JPG", link: "https://www.bing.com/shop?q=laptop" },
+      { id: 3, name: "T-Shirt", category: "clothing", price: 199, img: "images/tshirt.PNG", link: "https://www.meesho.com/tshirts-men/pl/3k8" },
+      { id: 4, name: "Jeans", category: "clothing", price: 299, img: "images/jeans.JPG", link: "https://www.meesho.com/jeans-men/pl/3nw" },
+      { id: 5, name: "Novel Book", category: "books", price: 149, img: "images/novels.JPG", link: "https://www.meesho.com/search?q=novels" },
+      { id: 6, name: "Headphones", category: "electronics", price: 300, img: "images/headphone.JPG", link: "https://www.meesho.com/electronics-mall" },
+      { id: 7, name: "LipStick", category: "makeup", price: 100, img: "images/lipstick.JPG", link: "https://www.meesho.com/lips-makeup/pl/3jd"},
+      { id: 8, name: "Foundation", category: "makeup", price: 149, img: "images/foundation.JPG", link: "https://www.meesho.com/face-makeup" }
+    ];
+
+    const productList = document.getElementById("productList");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const priceFilter = document.getElementById("priceFilter");
+
+    function renderProducts(list) {
+      productList.innerHTML = "";
+      if (list.length === 0) {
+        productList.innerHTML = "<p>No products found.</p>";
+        return;
+      }
+      list.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <a href="${p.link}" target="_blank">
+            <img src="${p.img}" alt="${p.name}">
+            <h4>${p.name}</h4>
+            <div class="price">&#8377; ${p.price}</div>
+          </a>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      let filtered = [...products];
+      const category = categoryFilter.value;
+      const maxPrice = parseFloat(priceFilter.value);
+
+      if (category !== "all") {
+        filtered = filtered.filter(p => p.category === category);
+      }
+      if (!isNaN(maxPrice)) {
+        filtered = filtered.filter(p => p.price <= maxPrice);
+      }
+
+      renderProducts(filtered);
+    }
+
+    categoryFilter.addEventListener("change", applyFilters);
+    priceFilter.addEventListener("input", applyFilters);
+
+    renderProducts(products);
+  </script>
+</body>
+</html>
