@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List with Local Storage</title>
+  <style>
+    body {
+      height: 100vh; /* full page height */
+      display: flex; /* enable flexbox */
+      justify-content: center; /* center horizontally */
+      align-items: center; /* center vertically */
+      background: linear-gradient(to right, rgba(219, 164, 164, 0.568), 
+        rgb(209, 159, 118), rgb(201, 201, 106), 
+        rgb(97, 179, 97), rgb(91, 91, 160), 
+        rgb(139, 101, 167), rgb(151, 92, 151));
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: #f35f91cb;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button.add {
+      background: #0eee64;
+      color: #fff;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      background: #f9fafb;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      border: 1px solid #e5e7eb;
+      color: black; /* so text is visible */
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: #6b7280;
+    }
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+    .actions button {
+      background: #e5e7eb;
+      color: #111;
+      font-size: 12px;
+      padding: 5px 8px;
+    }
+    .actions button.delete {
+      background: #ef4444;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My To-Do List</h2>
+    <div class="input-row">
+      <input type="text" id="taskInput" placeholder="Enter a new task...">
+      <button class="add" onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = "";
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.className = task.completed ? "completed" : "";
+        li.innerHTML = `
+          <span onclick="toggleTask(${index})">${task.text}</span>
+          <div class="actions">
+            <button onclick="toggleTask(${index})">${task.completed ? "Undo" : "Done"}</button>
+            <button class="delete" onclick="deleteTask(${index})">Delete</button>
+          </div>
+        `;
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      if (text === "") return;
+      tasks.push({ text, completed: false });
+      taskInput.value = "";
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleTask(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+
+    renderTasks();
+  </script>
+</body>
+</html>
