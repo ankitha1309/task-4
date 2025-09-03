@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Portfolio — R.Ankitha</title>
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #6ee7b7;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --radius: 14px;
+      --max: 1100px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+    }
+
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#061021 0%, #071428 60%);color:#e6eef6}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Layout */
+    .wrap{max-width:var(--max);margin:32px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#76adf1);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042024}
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+    nav a.active, nav a:hover{background:var(--glass);color:var(--accent)}
+
+    /* Hamburger for small screens */
+    .hamburger{display:none;border:1px solid var(--glass);padding:8px;border-radius:8px;background:var(--glass-2)}
+
+    main{display:grid;grid-template-columns:1fr 360px;gap:24px;margin-top:28px}
+
+    /* left column — hero + about + projects */
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:20px;border-radius:var(--radius);box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    .hero{display:flex;gap:18px;align-items:center}
+    .hero .intro{flex:1}
+    .hero h1{margin:0;font-size:28px}
+    .hero p{color:var(--muted);margin:6px 0 0}
+    .cta{margin-top:14px;display:flex;gap:10px}
+    .btn{padding:10px 14px;border-radius:10px;font-weight:700;border:0;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#032024}
+    .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--muted)}
+
+    /* projects grid */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+    .project{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .project h3{margin:0 0 6px;font-size:15px}
+    .project p{margin:0;color:var(--muted);font-size:13px}
+    .tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted)}
+
+    /* right column — contact card + skills */
+    .side{position:sticky;top:28px}
+    .contact-card{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .contact-card h3{margin:0 0 6px}
+    .socials{display:flex;gap:10px;margin-top:10px}
+    .socials a{padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px}
+
+    .skills{margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .skill{padding:8px;border-radius:8px;background:var(--glass)}
+
+    /* contact form */
+    .contact-form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:inherit;font-size:14px}
+    textarea{min-height:110px;resize:vertical}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* responsiveness */
+    @media (max-width:1000px){
+      main{grid-template-columns:1fr}
+      .side{position:static}
+    }
+    @media (max-width:720px){
+      .wrap{padding:12px;margin:16px}
+      nav{display:none}
+      .hamburger{display:block}
+      .hero h1{font-size:22px}
+      .projects-grid{grid-template-columns:1fr}
+      .skills{grid-template-columns:1fr 1fr}
+    }
+
+    /* small touches */
+    .muted{color:var(--muted)}
+    .project img{border-radius:8px;margin-bottom:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">RA</div>
+        <div>
+          <div style="font-weight:700">RAPOUL ANKITHA</div>
+          <div class="muted" style="font-size:13px">Web Developer • MATLAB • Java</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#about" class="active">About</a>
+        <a href="#projects">Projects</a>
+        <a href="https://www.linkedin.com/in/rapoul-ankitha-b93171346/">Contact</a>
+        <a href="https://androiddevhub.com/tools/link-converter/docx-to-link.php?id=183" class="btn btn-ghost">Resume</a>
+      </nav>
+
+      <button class="hamburger" id="hamb">☰</button>
+    </header>
+
+    <main>
+      <section>
+        <div class="panel" id="about">
+          <div class="hero">
+            <div style="width:110px;height:110px;border-radius:16px;background:linear-gradient(135deg,#60a5fa,#6ee7b7);display:flex;align-items:center;justify-content:center;font-size:28px;color:#042024;font-weight:800">RA</div>
+            <div class="intro">
+              <h1>Hi — I’m R.Ankitha</h1>
+              <p class="muted">I build beautiful, accessible web experiences. I specialize in MATLAB, Python, and a little VLSI design.</p>
+              <div class="cta">
+                <a class="btn btn-primary" href="https://github.com/">See projects</a>
+                <a class="btn btn-ghost" href="https://www.linkedin.com/in/sowmya-rani-41800b286">Get in touch</a>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px">
+            <h2 style="margin:0 0 8px">About me</h2>
+            <p class="muted">I’m a <strong>Web Developer</strong> with a background in Electronics (B.Tech) . I enjoyed the journey at ApexPlanet as of now. Outside coding I like Painting and Creating Crafts.</p>
+
+            <h2 style="margin-top:16px">Featured projects</h2>
+            <div class="projects-grid">
+              <article class="project">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='180'><rect width='100%' height='100%' fill='%230b1220'/><text x='20' y='40' font-size='18' fill='%236ee7b7'>Project 1 — Dashboard</text></svg>" alt="project-1" />
+                <h3>Interactive Quiz </h3>
+                <p class="muted">An Interactive quiz which contains MCQ's and created using the JavaScript.</p>
+                <div class="tags"><span class="tag">HTML</span><span class="tag">JavaScript</span></div>
+              </article>
+              <article class="project">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='180'><rect width='100%' height='100%' fill='%230b1220'/><text x='20' y='40' font-size='18' fill='%236ee7b7'>Project 4 — Game</text></svg>" alt="project-2" />
+                <h3>Portfolio Redesign</h3>
+                <p class="muted">Designed a Portfolio web page with different features using Responsive CSS.</p>
+                <div class="tags"><span class="tag">HTML</span><span class="tag">Responsive CSS</span></div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="projects" style="margin-top:18px">
+          <h2 style="margin:0 0 10px">All Projects</h2>
+          <p class="muted" style="margin:0 0 12px">A curated list of work — click a project to view details (placeholder links below).</p>
+
+          <div style="display:grid;gap:10px">
+            <a class="Task-1" href="https://github.com/ankitha1309/task-1">Project: Task-1 — Responsive CSS </a>
+            <a class="Task-2" href="https://github.com/ankitha1309/task-2">Project: Task-2 — Responsive CSS</a>
+            <a class="Task-3" href="https://github.com/ankitha1309/task-3">Project: Portfolio Redesign — Responsive CSS</a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="contact-card panel">
+          <h3>Contact</h3>
+          <div class="muted">Open to Web Development and full-time roles. I reply within 2–3 business days.</div>
+
+          <div style="margin-top:12px">
+            <strong>Email</strong>
+            <div class="muted">ankitha@1309@gmail.com</div>
+            <strong style="margin-top:8px;display:block">Location</strong>
+            <div class="muted">Hyderabad, India</div>
+          </div>
+
+          <div class="socials">
+            <a href="https://github.com/" title="GitHub">GH</a>
+            <a href="https://www.linkedin.com/in/rapoul-ankitha-b93171346/" title="LinkedIn">in</a>
+          </div>
+
+          <div class="skills">
+            <div class="skill">HTML & CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Python</div>
+            <div class="skill">C++</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <a class="btn btn-primary" href="mailto:sowmyarani1416@gmail.com">Email me</a>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px">
+          <h3>Send a message</h3>
+          <form id="contactForm" class="contact-form" onsubmit="return handleSubmit(event)">
+            <input id="name" type="text" placeholder="Your name" required />
+            <input id="email" type="email" placeholder="Email" required />
+            <select id="subject">
+              <option>General inquiry</option>
+              <option>Project proposal</option>
+              <option>Hire for job</option>
+            </select>
+            <textarea id="message" placeholder="Message" required></textarea>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+
+        <div class="panel" style="margin-top:14px;text-align:center">
+          <small class="muted">© <span id="year"></span> R Ankitha </small>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Built with ❤️ • Responsive, accessible, and easy to customize.
+    </footer>
+  </div>
+
+  <script>
+    
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+   
+    const hamb = document.getElementById('hamb');
+    hamb.addEventListener('click', ()=>{
+      const nav = document.querySelector('nav');
+      if(nav.style.display === 'flex') nav.style.display = '';
+      else nav.style.display = 'flex';
+    });
+
+    
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subj = document.getElementById('subject').value;
+      const msg = document.getElementById('message').value.trim();
+
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
+      const mailto = `mailto:youremail@example.com?subject=${encodeURIComponent(subj)}&body=${body}`;
+      window.location.href = mailto;
+      return false;
+    }
+
+    // highlight nav on scroll
+    const sections = Array.from(document.querySelectorAll('main section, main .panel'));
+    function highlight(){
+      const y = window.scrollY + 120;
+      const links = document.querySelectorAll('nav a');
+      links.forEach(l=>l.classList.remove('active'));
+      let found = false;
+      for(const s of sections){
+        if(s.offsetTop <= y && s.offsetTop + s.offsetHeight > y){
+          const id = s.id;
+          if(!id) continue;
+          const el = document.querySelector(`nav a[href=\"#${id}\"]`);
+          if(el){el.classList.add('active');found=true;break}
+        }
+      }
+      if(!found) document.querySelectorAll('nav a')[0].classList.add('active');
+    }
+    window.addEventListener('scroll', highlight);
+    highlight();
+  </script>
+</body>
+</html>
